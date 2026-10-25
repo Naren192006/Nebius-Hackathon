@@ -1,0 +1,64 @@
+# TrustRouter: the gateway on :8000 and a placeholder for the console on :5174.
+#
+#   cp backend/.env.example backend/.env    # then add NEBIUS_API_KEY (and TAVILY_API_KEY)
+#   docker compose up --build
+#   curl http://127.0.0.1:8000/healthz
+#
+# Keys are read from backend/.env, which is gitignored and excluded from the
+# image by .dockerignore. Nothing secret lives in this file.
+
+name: trustrouter
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: trustrouter-api:local
+    env_file:
+      # Optional so `docker compose config` still works before the file exists;
+      # without it the API starts but cannot reach Nebius.
+      - path: backend/.env
+        required: false
+    environment:
+      # The verifier package is on PYTHONPATH in the image, so the real
+      # claim checker is used instead of the stub. Set this to an empty string
+      # to fall back to the stub (answers then report status `unchecked`).
+      TRUSTROUTER_VERIFIER: ${TRUSTROUTER_VERIFIER:-verify:verify}
+      # One origin only: the Vite console. Any other site in the browser is
+      # refused, and `*` is stripped by config.cors_origins() regardless.
+      TRUSTROUTER_CORS_ORIGINS: ${TRUSTROUTER_CORS_ORIGINS:-http://localhost:5173}
+    ports:
+      - "8000:8000"
+    volumes:
+      # Named volumes inherit ownership from the image, so the non-root user can
+      # write the SQLite database and the log file.
+      - trustrouter-data:/app/backend/data
+      - trustrouter-logs:/app/backend/logs
+    restart: unless-stopped
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/healthz', timeout=4)"
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
+
+  frontend:
+    # Placeholder only: nginx's default welcome page on http://localhost:5174.
+    # The real console is the Vite app in frontend/ (`npm run dev`, port 5173).
+    # Replace this service with a node or static build when the two are wired up.
+    image: nginx:1.27-alpine
+    ports:
+      - "5174:80"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  trustrouter-data:
+  trustrouter-logs:

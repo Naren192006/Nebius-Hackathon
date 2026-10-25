@@ -1,0 +1,97 @@
+{
+  "generated_at": "2026-10-25T13:41:42Z",
+  "strategies": [
+    {
+      "strategy": "nano",
+      "n": 5,
+      "accuracy": 1.0,
+      "supported_claims_rate": 0.95,
+      "avg_cost_usd": 1.483e-05,
+      "total_cost_usd": 7.416e-05,
+      "cost_vs_ultra_pct": 8.55,
+      "p50_latency_ms": 1991.13,
+      "p95_latency_ms": 2816.97,
+      "repair_rate": 0.0,
+      "escalation_rate": 0.0
+    },
+    {
+      "strategy": "super",
+      "n": 5,
+      "accuracy": 1.0,
+      "supported_claims_rate": 0.96,
+      "avg_cost_usd": 0.00021168,
+      "total_cost_usd": 0.0010584,
+      "cost_vs_ultra_pct": 122.08,
+      "p50_latency_ms": 864.86,
+      "p95_latency_ms": 2425.86,
+      "repair_rate": 0.0,
+      "escalation_rate": 0.0
+    },
+    {
+      "strategy": "ultra",
+      "n": 5,
+      "accuracy": 1.0,
+      "supported_claims_rate": 1.0,
+      "avg_cost_usd": 0.0001734,
+      "total_cost_usd": 0.000867,
+      "cost_vs_ultra_pct": 100.0,
+      "p50_latency_ms": 689.76,
+      "p95_latency_ms": 735.48,
+      "repair_rate": 0.0,
+      "escalation_rate": 0.0
+    },
+    {
+      "strategy": "trustrouter",
+      "n": 5,
+      "accuracy": 1.0,
+      "supported_claims_rate": 0.875,
+      "avg_cost_usd": 0.00022028,
+      "total_cost_usd": 0.00110142,
+      "cost_vs_ultra_pct": 127.04,
+      "p50_latency_ms": 6669.03,
+      "p95_latency_ms": 7612.41,
+      "repair_rate": 0.0,
+      "escalation_rate": 0.0
+    }
+  ],
+  "by_category": [
+    {
+      "category": "factual_easy",
+      "strategy": "nano",
+      "n": 5,
+      "accuracy": 1.0,
+      "supported_claims_rate": 0.95,
+      "avg_cost_usd": 1.483e-05
+    },
+    {
+      "category": "factual_easy",
+      "strategy": "super",
+      "n": 5,
+      "accuracy": 1.0,
+      "supported_claims_rate": 0.96,
+      "avg_cost_usd": 0.00021168
+    },
+    {
+      "category": "factual_easy",
+      "strategy": "trustrouter",
+      "n": 5,
+      "accuracy": 1.0,
+      "supported_claims_rate": 0.875,
+      "avg_cost_usd": 0.00022028
+    },
+    {
+      "category": "factual_easy",
+      "strategy": "ultra",
+      "n": 5,
+      "accuracy": 1.0,
+      "supported_claims_rate": 1.0,
+      "avg_cost_usd": 0.0001734
+    }
+  ],
+  "cost_breakdown": {
+    "base": 0.00110142,
+    "verification": 0.04688,
+    "repair": 0.0
+  },
+  "failures": []
+}

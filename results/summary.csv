@@ -1,0 +1,5 @@
+strategy,n,accuracy,supported_claims_rate,avg_cost_usd,total_cost_usd,cost_vs_ultra_pct,p50_latency_ms,p95_latency_ms,repair_rate,escalation_rate
+nano,0,,,,0.00000000,,,,,
+super,0,,,,0.00000000,,,,,
+ultra,0,,,,0.00000000,,,,,
+trustrouter,0,,,,0.00000000,,,,,

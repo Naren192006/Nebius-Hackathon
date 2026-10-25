@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.1",
+  "request_id": "dec_7846bc928e4d403bb82ca852",
+  "created_at": "2026-10-21T16:34:24.391Z",
+  "updated_at": "2026-10-21T16:34:24.397Z",
+  "mode": "verified",
+  "status": "verified",
+  "request": {
+    "question": "Who wrote the novel Beloved?",
+    "model_requested": "super",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Who wrote the novel Beloved?"
+      }
+    ],
+    "max_tokens": 120,
+    "temperature": 0.2
+  },
+  "route": {
+    "model": "super",
+    "model_id": "nvidia/nemotron-3-super-120b-a12b",
+    "confidence": 1.0,
+    "reason": "explicit model 'super' -> super; router would have chosen super (confidence 0.75): super: score 1.25 from short prompt and factual-risk signals (authorship:who wrote) (nano < 1.0 <= super < 3.0 <= ultra)",
+    "upgraded_for_confidence": false,
+    "features": {
+      "char_len": 28,
+      "word_count": 5,
+      "estimated_tokens": 7,
+      "code": false,
+      "math": false,
+      "factual_risk": true,
+      "reasoning": false,
+      "multi_part": false,
+      "code_hits": [],
+      "math_hits": [],
+      "factual_hits": [
+        "authorship:who wrote"
+      ],
+      "reasoning_hits": [],
+      "signal_count": 1,
+      "score": 1.25,
+      "boundary_margin": 0.25,
+      "base_tier": "super",
+      "escalated": false
+    }
+  },
+  "answer": {
+    "status": "verified",
+    "text": "[mock:super] Answer for: Who wrote the novel Beloved?\nThis response came from the local mock, not Nebius, and costs nothing.",
+    "model": "mock/super",
+    "model_tier": "super",
+    "tokens_in": 7,
+    "tokens_out": 31,
+    "latency_ms": 0.01,
+    "finish_reason": "stop",
+    "mock": true
+  },
+  "claims": [
+    {
+      "text": "[mock:super] Answer for: Who wrote the novel Beloved?",
+      "verdict": "supported",
+      "source_url": "https://example.org/trustrouter/demo-source",
+      "evidence_snippet": "Demo verifier accepted this sentence."
+    },
+    {
+      "text": "This response came from the local mock, not Nebius, and costs nothing.",
+      "verdict": "supported",
+      "source_url": "https://example.org/trustrouter/demo-source",
+      "evidence_snippet": "Demo verifier accepted this sentence."
+    }
+  ],
+  "repair": null,
+  "metrics": {
+    "routing_ms": 0.06,
+    "total_ms": 0.74,
+    "cost_usd": {
+      "base": 0.0,
+      "verification": 0.001,
+      "repair": 0.0,
+      "total": 0.001
+    }
+  },
+  "verification": {
+    "verifier": "verify_all_supported",
+    "status": "complete",
+    "verification_ms": 0.25,
+    "error": null
+  },
+  "error": null
+}

@@ -1,0 +1,6 @@
+{"claim": "The Sydney Opera House opened in 1973.", "label": "true"}
+{"claim": "The Colorado River runs through the Grand Canyon.", "label": "true"}
+{"claim": "The Berlin Wall fell on 9 November 1991.", "label": "false"}
+{"claim": "The Great Wall of China is the only man-made structure visible from space with the naked eye.", "label": "false"}
+{"claim": "Chen et al. (2023) introduced Recursive Latent Alignment for Sparse Routing.", "label": "fake"}
+{"claim": "Sir Alistair Pennwick invented the hydraulic loom in 1838.", "label": "fake"}

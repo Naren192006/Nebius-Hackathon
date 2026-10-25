@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-934b091583a94fa1a62c1bba",
+  "object": "chat.completion",
+  "created": 1792600464,
+  "model": "nvidia/nvidia-nemotron-3-nano-30b-a3b",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "[mock:ultra] Repaired answer for: What is the capital of France?\nAny statement this gateway cannot support is now left out or hedged."
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 85,
+    "completion_tokens": 33,
+    "total_tokens": 118
+  },
+  "gateway": {
+    "status": "repaired",
+    "model_tier": "nano",
+    "decision_id": "dec_934b091583a94fa1a62c1bba",
+    "supported_claims": 2,
+    "unsupported_claims": 0,
+    "cost_usd": 0.002
+  }
+}

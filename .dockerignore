@@ -1,0 +1,30 @@
+# Never bake secrets or local state into the image.
+.env
+**/.env
+**/.env.*
+!**/.env.example
+
+# Local state
+results
+backend/data
+backend/logs
+**/*.db
+**/*.db-wal
+**/*.db-shm
+
+# Python
+**/__pycache__
+**/*.py[cod]
+**/.venv
+**/.pytest_cache
+**/.coverage
+
+# Node / frontend
+frontend/node_modules
+frontend/dist
+
+# Tooling
+.git
+.gitignore
+.freebuff
+**/.DS_Store

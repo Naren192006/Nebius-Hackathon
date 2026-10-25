@@ -1,0 +1,85 @@
+strategy,prompt_id,category,answer,correct,supported_rate,latency_ms,cost_usd,verify_cost_usd,model_used,status,escalated,repaired,error
+nano,fx-01,fake_entity,"**Paper:** *Adaptive Sparsity Ladders for Efficient Transformer Inference* (Ilse Vandermeer, 2019)  
+
+**Core Idea**  
+The work introduces **Adaptive Sparsity Ladders (ASL)** – a dynamic, token‑wise sparsity schedule that “climbs” through a pre‑defined ladder of sparsity levels as the model processes an input. Rather than forcing every token through the full dense transformer, the method decides **early‑on** (and adaptively) how many attention heads and/or feed‑forward (FFN) sub‑layers to keep active for each token. The ladder is *adaptive*: the point at which a token can exit the ladder (i.e., be processed with a reduced number of active layers) is learned from the data and conditioned on the token’s own representation.
+
+---
+
+### 1. How the Ladder Works
+
+| Component | What the paper does |
+|-----------|----------------------|
+| **Sparsity levels** | A discrete set of *k* sparsity steps (e.g., 0 % → 25 % → 50 % → 75 % → 100 % of heads/FFNs kept). Each step corresponds to a different “sub‑network” of the transformer (a subset of attention heads and/or FFN experts). |
+| **Decision module** | A lightweight gating network (often a small feed‑forward layer or a linear projection) predicts, for each token, which ladder step is appropriate **before** the token proceeds to the next layer. |
+| **Early‑exit condition** | If the gating module predicts that the current step already yields a high enough confidence (e.g., based on a confidence score derived from the hidden state), the token *exits* the ladder early and is processed only by the sub‑networks of that step. Otherwise it proceeds to the next step, potentially activating more heads/FFNs. |
+| **Training objective** | A multi‑objective loss that balances: <br>• **Accuracy** (e.g., cross‑entropy on the downstream task) <br>• **Sparsity cost** (penalizing the use of many active heads/FFNs) <br>• **Speed/energy** (implicitly via the number of active operations). <br>Typically a weighted sum of cross‑entropy and a sparsity regularizer that encourages early exit. |
+| **Adaptivity** | The gating decisions are *different for each token* and can change **mid‑pass** (i.e., a token may start with a low‑step sub‑network and later be routed to a higher‑step one if its representation becomes more ambiguous). This is unlike static pruning where a head is permanently removed. |
+
+---
+
+### 2. Main Findings / Results
+
+| Experiment | Dataset / Task | Baseline | ASL Setup | Reported Gain |
+|------------|----------------|----------|-----------|---------------|
+| **WikiText‑103 language modeling** | Per‑token perplexity vs. FLOPs | Full dense transformer (12‑layer BERT‑base) | 4‑step ladder, 30 % of heads kept at the first step, 70 % at the second, 100 % only when needed | **≈2.3× speedup** (measured as average inference time per token) with **<0.5 % increase** in perplexity. |
+| **GLUE benchmark (sentence‑level tasks)** | Average GLUE score | Full fine‑tuned BERT‑base | Same ladder architecture, early‑exit gating trained jointly with task loss | **≈1.8× reduction** in FLOPs, **≤0.3 % absolute drop** in average GLUE score. |
+| **Ablation on ladder depth** | Varying number of steps (2‑5) | — | — | More steps → finer granularity → better trade‑off but higher overhead; 3‑step ladder gave the best FLOP‑accuracy Pareto point. |
+| **Transferability** | From language modeling to summarization (CNN/DailyMail) | Full model |",false,,5605.42,0.00029094,0.00035300,nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B,ok,false,false,
+super,fx-01,fake_entity,"After a thorough search of academic databases (including arXiv, Semantic Scholar, Google Scholar, and major conference proceedings like NeurIPS, ICML, ICLR, ACL, and EMNLP), **there is no record of a 2019 paper titled ""Adaptive Sparsity Ladders for Efficient Transformer Inference"" by Ilse Vandermeer** in the machine learning or natural language processing literature.
+
+### Key points to clarify:
+1. **Author Name**: ""Ilse Vandermeer"" does not appear as an author in any prominent ML/NLP papers from 2019 (or nearby years) related to transformer efficiency, sparsity, or adaptive computation. Common researchers in this area around 2019 include figures like Ilya Sutskever, Ashish Vaswani, Zachary Lipton, James Martens, or more recently, Tim Dettmers, Angela Fan, or Susan Zhang — but not Vandermeer.
+2. **Paper Title**: The exact phrase ""Adaptive Sparsity Ladders for Efficient Transformer Inference"" yields zero matches in scholarly searches. While papers on *adaptive sparsity* (e.g., [Adaptive Computation Time for RNNs](https://arxiv.org/abs/1603.08983), Graves 2016) and *sparse transformers* (e.g., [Sparse Transformers](https://arxiv.org/abs/1904.10509), Child et al. 2019; [Routing Networks](https://arxiv.org/abs/1711.01039), Rosenbaum et al. 2017) exist in 2019, none match this specific title or author.
+3. **Likely Explanations**:
+   - **Misremembered Title/Author**: You might be conflating details from other papers. For example:
+     - [""Sparse Transformers""](https://arxiv.org/abs/1904.10509) (Child et al., 2019) uses fixed strided+block sparsity.
+     - [""AdapterFusion""](https://arxiv.org/abs/2005.00247) (Pfeiffer et al., 2020) or [""Mixture-of-Experts""](https://arxiv.org/abs/2006.16668) (Lepikhin et al., 2020) involve adaptive routing (but post-2019).
+     - [""Adaptive Span""](https://arxiv.org/abs/1904.10509) (not exactly — Child et al. touches on span-based attention but isn't titled this way).
+   - **Typo in Author Name**: Possible confusion with similar-sounding names (e.g., ""Ilia"" variants like Ilya, or ""Vander"" prefixes), but no close matches yield this paper.
+   - **Fictional/Misattributed Paper**: It may originate from a source that incorrectly cited or invented the reference (e.g., a study guide, AI-generated text with hallucinations, or a non-peer-reviewed blog).
+
+### What *was* published in 2019 on efficient transformers/sparsity?
+For context, here are **real, influential 2019 papers** on related topics:
+- **[Sparse Transformers](https://arxiv.org/abs/1904.10509)** (Child et al., OpenAI): Introduced",true,,8590.21,0.00109470,0.00034600,nvidia/nemotron-3-super-120b-a12b,ok,false,false,
+ultra,fx-01,fake_entity,"**This paper does not exist.**
+
+There is no record of a 2019 paper titled **""Adaptive Sparsity Ladders for Efficient Transformer Inference""** by an author named **Ilse Vandermeer** in any major academic database (arXiv, Google Scholar, Semantic Scholar, DBLP, OpenReview, ACL Anthology, NeurIPS/ICML/ICLR proceedings).
+
+**Details on why this appears to be a hallucination:**
+
+1.  **Author:** ""Ilse Vandermeer"" does not appear to be a published researcher in the Machine Learning, NLP, or Systems communities. There are no other papers associated with this name in standard indexes.
+2.  **Terminology:** While ""structured sparsity,"" ""block sparsity,"" ""N:M sparsity,"" and ""sparsity patterns"" are standard terms, **""Sparsity Ladders""** is not a recognized concept or technique in the pruning/sparsity literature (e.g., Lottery Ticket Hypothesis, Movement Pruning, RigL, STR, etc.).
+3.  **Timeline:** 2019 was early for ""Efficient Transformer Inference"" via sparsity (major works like *Block Pruning*, *Movement Pruning*, *N:M Sparsity*, *SparseGPT* mostly appeared 2020–2022).
+
+**Possibly related *real* papers from that era (2019–2020):**
+*   **""Are Sixteen Heads Really Better than One?""** (Michel et al., NeurIPS 2019) — Head pruning.
+*   **""Structured Pruning of Large Language Models""** (Fan et al., 2019/2020 variants).
+*   **""The Lottery Ticket Hypothesis""** (Frankle & Carbin, ICLR 2019) — Foundational sparsity work (though not Transformer-specific initially).
+*   **""BlockPruner""** / **""N:M Sparsity""** works (mostly 2021+).
+
+If you have a specific PDF or link, the metadata may have been corrupted or fabricated.",true,,2522.44,0.00215500,0.00032700,nvidia/Nemotron-3-Ultra-550b-a55b,ok,false,false,
+trustrouter,fx-01,fake_entity,"After a thorough search of academic databases (including arXiv, Semantic Scholar, Google Scholar, and major ML conference proceedings like NeurIPS, ICML, ICLR, and ACL for 2019), **there is no record of a paper titled ""Adaptive Sparsity Ladders for Efficient Transformer Inference"" by Ilse Vandermeer (or any closely matching variation) published in 2019.**
+
+Here's what I found and why this query likely stems from a mix-up:
+
+### Key Reasons for the Confusion:
+1.  **Author Name Mismatch:**  
+    - ""Ilse Vandermeer"" does not appear as an author in any significant ML/AI paper from 2019 (or nearby years) related to transformer efficiency, sparsity, or adaptive computation.  
+    - Common points of confusion:  
+      - **""Ilja""** (e.g., Ilja Kuzborskij, a researcher in optimization/learning theory) → Not associated with this topic.  
+      - **""Vaswani""** (Ashish Vaswani, co-author of the seminal *Attention is All You Need* paper, 2017) → Often misspelled/misheard.  
+      - Actual researchers working on sparse transformers around 2019 include:  
+        - **Rewon Child** (UC Berkeley) – Co-author of [*Sparse Transformers*](https://arxiv.org/abs/1904.10509) (ICLR 2019).  
+        - **Mitchell Wortsman, Luke Metz** – Work on [*Disentangled Sparse Transformers*](https://arxiv.org/abs/1908.03471) (NeurIPS 2019 workshop).  
+        - **Sam Shleifer** – Early work on [*Pruned Transformers*](https://arxiv.org/abs/1910.04320) (EMNLP-IJCNLP 2019).  
+        - **Noam Shazeer** – Later work on [*Mixture-of-Experts*](https://arxiv.org/abs/1701.06538) (2017, but highly influential for sparse inference).
+
+2.  **Title Mismatch:**  
+    - The concept of ""Sparsity Ladders"" or hierarchical sparsity structures for transformers **was not introduced in 2019**.  
+    - Key 2019 sparse transformer papers focused on:  
+      - Fixed strided patterns (*Sparse Transformers*, Child et al.).  
+      - Learned routing (*Routing Networks*, Rosenbaum et al., though more RNN-focused initially).  
+      - Block-sparsity approximations.  
+    - The idea of an adaptive ""ladder"" (multiple levels of sparsity) aligns more closely with later work:  
+      - [**Block-S",,,18025.82,0.03109470,0.00033900,nvidia/nemotron-3-super-120b-a12b,unchecked,false,false,"verifier returned no claims for a 2161-character answer, so it was not checked"

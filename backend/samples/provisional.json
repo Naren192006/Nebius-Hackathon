@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-437b373e20b44b6a9f294621",
+  "object": "chat.completion",
+  "created": 1792600464,
+  "model": "nvidia/nvidia-nemotron-3-nano-30b-a3b",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "[mock:nano] Answer for: Say hello in one short sentence.\nThis response came from the local mock, not Nebius, and costs nothing."
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 8,
+    "completion_tokens": 31,
+    "total_tokens": 39
+  },
+  "gateway": {
+    "status": "provisional",
+    "model_tier": "nano",
+    "decision_id": "dec_437b373e20b44b6a9f294621",
+    "supported_claims": 0,
+    "unsupported_claims": 0,
+    "cost_usd": 0.0
+  }
+}

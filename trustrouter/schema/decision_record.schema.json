@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TrustRouter decision record",
+  "description": "One row per request. Returned by GET /decisions/{id}; powers the 'why this model?' panel.",
+  "type": "object",
+  "required": ["request_id", "created_at", "mode", "prompt_hash", "features", "route", "answer", "claims", "repair", "metrics"],
+  "properties": {
+    "request_id": {"type": "string"},
+    "created_at": {"type": "string", "description": "ISO 8601 UTC"},
+    "mode": {"enum": ["fast", "verified"]},
+    "prompt_hash": {"type": "string", "description": "sha256 of the prompt; raw prompt is not stored"},
+    "features": {
+      "type": "object",
+      "required": ["length_words", "has_code", "has_math", "factual_hits", "reasoning_hits"],
+      "properties": {
+        "length_words": {"type": "integer"},
+        "has_code": {"type": "boolean"},
+        "has_math": {"type": "boolean"},
+        "factual_hits": {"type": "integer"},
+        "reasoning_hits": {"type": "integer"}
+      }
+    },
+    "route": {
+      "type": "object",
+      "required": ["model", "initial_model", "confidence", "reason", "upgraded_for_confidence"],
+      "properties": {
+        "model": {"enum": ["nano", "super", "ultra"]},
+        "initial_model": {"enum": ["nano", "super", "ultra"]},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "reason": {"type": "string"},
+        "upgraded_for_confidence": {"type": "boolean"}
+      }
+    },
+    "answer": {
+      "type": "object",
+      "required": ["status", "text"],
+      "properties": {
+        "status": {"enum": ["provisional", "verified", "repaired", "unchecked"]},
+        "text": {"type": "string"}
+      }
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["text", "verdict"],
+        "properties": {
+          "text": {"type": "string"},
+          "verdict": {"enum": ["supported", "unsupported", "unclear"]},
+          "source_url": {"type": ["string", "null"]},
+          "evidence_snippet": {"type": ["string", "null"]},
+          "reason": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "repair": {
+      "type": "object",
+      "required": ["triggered"],
+      "properties": {
+        "triggered": {"type": "boolean"},
+        "model": {"type": ["string", "null"]},
+        "previous_text": {"type": ["string", "null"]},
+        "flagged_claims": {"type": "array", "items": {"type": "string"}},
+        "claims_still_flagged": {"type": "integer"}
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "required": ["routing_ms", "total_ms", "cost_usd"],
+      "properties": {
+        "routing_ms": {"type": "number"},
+        "total_ms": {"type": "number"},
+        "tokens_in": {"type": "integer"},
+        "tokens_out": {"type": "integer"},
+        "cost_usd": {
+          "type": "object",
+          "required": ["base", "verification", "repair", "total"],
+          "properties": {
+            "base": {"type": "number"},
+            "verification": {"type": "number"},
+            "repair": {"type": "number"},
+            "total": {"type": "number"}
+          }
+        },
+        "ultra_baseline_cost_usd_estimate": {"type": ["number", "null"]}
+      }
+    },
+    "error": {"type": ["string", "null"]}
+  }
+}

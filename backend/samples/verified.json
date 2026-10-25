@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-7846bc928e4d403bb82ca852",
+  "object": "chat.completion",
+  "created": 1792600464,
+  "model": "nvidia/nemotron-3-super-120b-a12b",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "[mock:super] Answer for: Who wrote the novel Beloved?\nThis response came from the local mock, not Nebius, and costs nothing."
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7,
+    "completion_tokens": 31,
+    "total_tokens": 38
+  },
+  "gateway": {
+    "status": "verified",
+    "model_tier": "super",
+    "decision_id": "dec_7846bc928e4d403bb82ca852",
+    "supported_claims": 2,
+    "unsupported_claims": 0,
+    "cost_usd": 0.001
+  }
+}

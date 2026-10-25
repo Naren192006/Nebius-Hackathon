@@ -1,0 +1,6 @@
+-r requirements.txt
+pytest>=8.0
+jsonschema>=4.20
+httpx>=0.27
+# The claim verifier is imported by tests/test_core.py.
+tavily-python>=0.5

@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.1",
+  "request_id": "dec_934b091583a94fa1a62c1bba",
+  "created_at": "2026-10-21T16:34:24.405Z",
+  "updated_at": "2026-10-21T16:34:24.413Z",
+  "mode": "verified",
+  "status": "repaired",
+  "request": {
+    "question": "What is the capital of France?",
+    "model_requested": "nano",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is the capital of France?"
+      }
+    ],
+    "max_tokens": 120,
+    "temperature": 0.2
+  },
+  "route": {
+    "model": "nano",
+    "model_id": "nvidia/nvidia-nemotron-3-nano-30b-a3b",
+    "confidence": 1.0,
+    "reason": "explicit model 'nano' -> nano; router would have chosen super (confidence 0.75): super: score 1.25 from short prompt and factual-risk signals (fact lookup:capital of) (nano < 1.0 <= super < 3.0 <= ultra)",
+    "upgraded_for_confidence": false,
+    "features": {
+      "char_len": 30,
+      "word_count": 6,
+      "estimated_tokens": 7,
+      "code": false,
+      "math": false,
+      "factual_risk": true,
+      "reasoning": false,
+      "multi_part": false,
+      "code_hits": [],
+      "math_hits": [],
+      "factual_hits": [
+        "fact lookup:capital of"
+      ],
+      "reasoning_hits": [],
+      "signal_count": 1,
+      "score": 1.25,
+      "boundary_margin": 0.25,
+      "base_tier": "super",
+      "escalated": false
+    }
+  },
+  "answer": {
+    "status": "repaired",
+    "text": "[mock:ultra] Repaired answer for: What is the capital of France?\nAny statement this gateway cannot support is now left out or hedged.",
+    "model": "mock/ultra",
+    "model_tier": "ultra",
+    "tokens_in": 85,
+    "tokens_out": 33,
+    "latency_ms": 0.01,
+    "finish_reason": "stop",
+    "mock": true
+  },
+  "claims": [
+    {
+      "text": "[mock:ultra] Repaired answer for: What is the capital of France?",
+      "verdict": "supported",
+      "source_url": "https://example.org/trustrouter/demo-source",
+      "evidence_snippet": "Demo verifier accepted this sentence."
+    },
+    {
+      "text": "Any statement this gateway cannot support is now left out or hedged.",
+      "verdict": "supported",
+      "source_url": "https://example.org/trustrouter/demo-source",
+      "evidence_snippet": "Demo verifier accepted this sentence."
+    }
+  ],
+  "repair": {
+    "triggered": true,
+    "model": "mock/ultra",
+    "previous_text": "[mock:nano] Answer for: What is the capital of France?\nThis response came from the local mock, not Nebius, and costs nothing."
+  },
+  "metrics": {
+    "routing_ms": 0.06,
+    "total_ms": 0.49,
+    "cost_usd": {
+      "base": 0.0,
+      "verification": 0.002,
+      "repair": 0.0,
+      "total": 0.002
+    }
+  },
+  "verification": {
+    "verifier": "verify",
+    "status": "complete",
+    "verification_ms": 0.04,
+    "error": null
+  },
+  "error": null
+}

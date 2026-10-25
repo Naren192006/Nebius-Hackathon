@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.1",
+  "request_id": "dec_0302cc34545d4396b24450ac",
+  "created_at": "2026-10-21T16:34:24.420Z",
+  "updated_at": "2026-10-21T16:34:24.427Z",
+  "mode": "verified",
+  "status": "unchecked",
+  "request": {
+    "question": "How many moons does Neptune have?",
+    "model_requested": "nano",
+    "messages": [
+      {
+        "role": "user",
+        "content": "How many moons does Neptune have?"
+      }
+    ],
+    "max_tokens": 120,
+    "temperature": 0.2
+  },
+  "route": {
+    "model": "nano",
+    "model_id": "nvidia/nvidia-nemotron-3-nano-30b-a3b",
+    "confidence": 1.0,
+    "reason": "explicit model 'nano' -> nano; router would have chosen super (confidence 0.75): super: score 1.25 from short prompt and factual-risk signals (fact lookup:how many) (nano < 1.0 <= super < 3.0 <= ultra)",
+    "upgraded_for_confidence": false,
+    "features": {
+      "char_len": 33,
+      "word_count": 6,
+      "estimated_tokens": 8,
+      "code": false,
+      "math": false,
+      "factual_risk": true,
+      "reasoning": false,
+      "multi_part": false,
+      "code_hits": [],
+      "math_hits": [],
+      "factual_hits": [
+        "fact lookup:how many"
+      ],
+      "reasoning_hits": [],
+      "signal_count": 1,
+      "score": 1.25,
+      "boundary_margin": 0.25,
+      "base_tier": "super",
+      "escalated": false
+    }
+  },
+  "answer": {
+    "status": "unchecked",
+    "text": "[mock:nano] Answer for: How many moons does Neptune have?\nThis response came from the local mock, not Nebius, and costs nothing.",
+    "model": "mock/nano",
+    "model_tier": "nano",
+    "tokens_in": 8,
+    "tokens_out": 32,
+    "latency_ms": 0.01,
+    "finish_reason": "stop",
+    "mock": true
+  },
+  "claims": [],
+  "repair": null,
+  "metrics": {
+    "routing_ms": 0.06,
+    "total_ms": 0.35,
+    "cost_usd": {
+      "base": 0.0,
+      "verification": 0.0,
+      "repair": 0.0,
+      "total": 0.0
+    }
+  },
+  "verification": {
+    "verifier": "stub",
+    "status": "skipped",
+    "verification_ms": null,
+    "error": "no verifier configured; the stub returns no claims"
+  },
+  "error": null
+}

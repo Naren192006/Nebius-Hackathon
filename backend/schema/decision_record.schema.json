@@ -1,0 +1,210 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trustrouter.local/schemas/decision_record.schema.json",
+  "title": "TrustRouter decision record",
+  "description": "Canonical v1.1 record stored in decisions.record_json, returned by GET /decisions/{id}, and shared with Backend B and Backend C.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "request_id",
+    "created_at",
+    "updated_at",
+    "mode",
+    "status",
+    "request",
+    "route",
+    "answer",
+    "claims",
+    "repair",
+    "metrics",
+    "verification",
+    "error"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "enum": ["1.1"] },
+    "request_id": { "type": "string", "pattern": "^dec_[a-f0-9]{24}$" },
+    "created_at": { "type": "string" },
+    "updated_at": { "type": "string" },
+    "mode": { "type": "string", "enum": ["fast", "verified"] },
+    "status": {
+      "type": "string",
+      "enum": ["provisional", "verified", "repaired", "unchecked", "nothing_to_check", "failed"]
+    },
+    "request": { "$ref": "#/$defs/request" },
+    "route": { "$ref": "#/$defs/route" },
+    "answer": { "oneOf": [{ "$ref": "#/$defs/answer" }, { "type": "null" }] },
+    "claims": { "type": "array", "items": { "$ref": "#/$defs/claim" } },
+    "repair": { "oneOf": [{ "$ref": "#/$defs/repair" }, { "type": "null" }] },
+    "metrics": { "$ref": "#/$defs/metrics" },
+    "verification": { "$ref": "#/$defs/verification" },
+    "error": { "type": ["string", "null"] }
+  },
+  "$defs": {
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["question", "model_requested", "messages", "max_tokens", "temperature"],
+      "properties": {
+        "question": { "type": "string" },
+        "model_requested": { "type": "string" },
+        "messages": { "type": "array", "items": { "$ref": "#/$defs/message" } },
+        "max_tokens": { "type": "integer", "minimum": 1 },
+        "temperature": { "type": "number" }
+      }
+    },
+    "message": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role", "content"],
+      "properties": {
+        "role": { "type": "string", "enum": ["system", "user", "assistant", "tool"] },
+        "content": { "type": "string" }
+      }
+    },
+    "route": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model",
+        "model_id",
+        "confidence",
+        "reason",
+        "upgraded_for_confidence",
+        "features"
+      ],
+      "properties": {
+        "model": { "type": "string", "enum": ["nano", "super", "ultra"] },
+        "model_id": { "type": "string" },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "reason": { "type": "string" },
+        "upgraded_for_confidence": { "type": "boolean" },
+        "features": { "$ref": "#/$defs/features" }
+      }
+    },
+    "features": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "char_len",
+        "word_count",
+        "estimated_tokens",
+        "code",
+        "math",
+        "factual_risk",
+        "reasoning",
+        "multi_part",
+        "code_hits",
+        "math_hits",
+        "factual_hits",
+        "reasoning_hits",
+        "signal_count",
+        "score",
+        "boundary_margin",
+        "base_tier",
+        "escalated"
+      ],
+      "properties": {
+        "char_len": { "type": "integer", "minimum": 0 },
+        "word_count": { "type": "integer", "minimum": 0 },
+        "estimated_tokens": { "type": "integer", "minimum": 1 },
+        "code": { "type": "boolean" },
+        "math": { "type": "boolean" },
+        "factual_risk": { "type": "boolean" },
+        "reasoning": { "type": "boolean" },
+        "multi_part": { "type": "boolean" },
+        "code_hits": { "type": "array", "items": { "type": "string" } },
+        "math_hits": { "type": "array", "items": { "type": "string" } },
+        "factual_hits": { "type": "array", "items": { "type": "string" } },
+        "reasoning_hits": { "type": "array", "items": { "type": "string" } },
+        "signal_count": { "type": "integer", "minimum": 0 },
+        "score": { "type": "number" },
+        "boundary_margin": { "type": "number", "minimum": 0 },
+        "base_tier": { "type": "string", "enum": ["nano", "super", "ultra"] },
+        "escalated": { "type": "boolean" }
+      }
+    },
+    "answer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "text",
+        "model",
+        "model_tier",
+        "tokens_in",
+        "tokens_out",
+        "latency_ms",
+        "finish_reason",
+        "mock"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["provisional", "verified", "repaired", "unchecked", "nothing_to_check", "failed"]
+        },
+        "text": { "type": "string" },
+        "model": { "type": "string" },
+        "model_tier": { "type": "string", "enum": ["nano", "super", "ultra"] },
+        "tokens_in": { "type": "integer", "minimum": 0 },
+        "tokens_out": { "type": "integer", "minimum": 0 },
+        "latency_ms": { "type": "number", "minimum": 0 },
+        "finish_reason": { "type": ["string", "null"] },
+        "mock": { "type": "boolean" }
+      }
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text", "verdict", "source_url", "evidence_snippet"],
+      "properties": {
+        "text": { "type": "string" },
+        "verdict": { "type": "string", "enum": ["supported", "unsupported", "unclear"] },
+        "source_url": { "type": ["string", "null"] },
+        "evidence_snippet": { "type": ["string", "null"] }
+      }
+    },
+    "repair": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["triggered", "model", "previous_text"],
+      "properties": {
+        "triggered": { "type": "boolean" },
+        "model": { "type": "string" },
+        "previous_text": { "type": "string" }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["routing_ms", "total_ms", "cost_usd"],
+      "properties": {
+        "routing_ms": { "type": "number", "minimum": 0 },
+        "total_ms": { "type": "number", "minimum": 0 },
+        "cost_usd": { "$ref": "#/$defs/costs" }
+      }
+    },
+    "costs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["base", "verification", "repair", "total"],
+      "properties": {
+        "base": { "type": "number", "minimum": 0 },
+        "verification": { "type": "number", "minimum": 0 },
+        "repair": { "type": "number", "minimum": 0 },
+        "total": { "type": "number", "minimum": 0 }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["verifier", "status", "verification_ms", "error"],
+      "properties": {
+        "verifier": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "complete", "skipped", "error"] },
+        "verification_ms": { "type": ["number", "null"], "minimum": 0 },
+        "error": { "type": ["string", "null"] }
+      }
+    }
+  }
+}
